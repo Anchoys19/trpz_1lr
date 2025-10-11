@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories { mavenCentral() }
+
+dependencies {
+    implementation 'org.xerial:sqlite-jdbc:3.46.0.0'
+    runtimeOnly 'org.slf4j:slf4j-simple:2.0.13'
+}
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(17) }
+}
+
+application {
+    mainClass = 'dm.app.Main'
+    applicationDefaultJvmArgs = ['--enable-native-access=ALL-UNNAMED']
+}
+
+tasks.named('run') {
+    standardInput = System.in
+    jvmArgs '--enable-native-access=ALL-UNNAMED'
+}
