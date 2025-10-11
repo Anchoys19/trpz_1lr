@@ -20,6 +20,12 @@ public class DownloadService implements AutoCloseable {
         this.repo = new TaskRepository(sqliteDb);
     }
 
+
+    public TaskRepository getRepository() {
+        return repo;
+    }
+
+
     public int add(String url, Path target) throws Exception {
         int id = repo.create(url, target.toString());
         resume(id);

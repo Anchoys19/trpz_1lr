@@ -96,5 +96,19 @@ public class TaskRepository implements AutoCloseable {
         );
     }
 
+    public List<DownloadTask> listRange(int offset, int limit) throws SQLException {
+        List<DownloadTask> out = new ArrayList<>();
+        try (PreparedStatement ps = con.prepareStatement(
+                "SELECT * FROM tasks ORDER BY id LIMIT ? OFFSET ?")) {
+            ps.setInt(1, Math.max(0, limit));
+            ps.setInt(2, Math.max(0, offset));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) out.add(map(rs));
+            }
+        }
+        return out;
+    }
+
+
     @Override public void close() throws Exception { con.close(); }
 }
